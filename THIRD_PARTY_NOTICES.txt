@@ -1,0 +1,13 @@
+THIRD-PARTY SOFTWARE NOTICES
+============================
+
+This application bundles heic2any 0.0.4.
+Copyright (c) Alex Corvi and contributors.
+Licensed under the MIT License.
+Source: https://github.com/alexcorvi/heic2any
+
+This application is packaged with Electron.
+Electron and Chromium include open-source components under their respective
+licenses. Electron license information is distributed with the packaged app.
+
+The full dependency metadata is available in package-lock.json.

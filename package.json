@@ -1,0 +1,59 @@
+{
+  "name": "heic-offline-converter",
+  "version": "1.0.0",
+  "description": "完全離線的 HEIC/HEIF 圖片轉檔工具",
+  "main": "src/main.js",
+  "author": "Chia Li",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "check": "node --check src/main.js && node --check src/preload.js && node --check src/renderer.js",
+    "pack:win": "electron-builder --win portable --x64",
+    "pack:linux": "electron-builder --linux AppImage --x64"
+  },
+  "dependencies": {
+    "heic2any": "0.0.4"
+  },
+  "devDependencies": {
+    "electron": "43.4.1",
+    "electron-builder": "26.15.3"
+  },
+  "build": {
+    "appId": "com.chiali.heicofflineconverter",
+    "productName": "HEIC 離線轉檔器",
+    "asar": true,
+    "compression": "maximum",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "src/**/*",
+      "node_modules/heic2any/dist/heic2any.min.js",
+      "package.json",
+      "THIRD_PARTY_NOTICES.txt"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "build/icon.ico",
+      "signAndEditExecutable": false,
+      "artifactName": "HEIC-Offline-Converter-${version}-${arch}.${ext}"
+    },
+    "portable": {
+      "requestExecutionLevel": "user"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "build/icon.png",
+      "category": "Graphics",
+      "artifactName": "HEIC-Offline-Converter-${version}-${arch}.${ext}"
+    }
+  }
+}

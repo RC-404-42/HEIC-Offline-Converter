@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; img-src 'self' blob: data:; script-src 'self' 'unsafe-eval'; style-src 'self'; worker-src 'self' blob:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HEIC 離線轉檔器</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <main class="app-shell">
+      <header class="hero">
+        <div class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 48 48" role="img">
+            <path d="M12 7h18l8 8v26H12z" />
+            <path d="M30 7v9h8M17 32l5-6 4 4 4-5 4 7z" />
+            <circle cx="21" cy="20" r="2.5" />
+          </svg>
+        </div>
+        <div>
+          <p class="eyebrow">LOCAL IMAGE TOOL</p>
+          <h1>HEIC 離線轉檔器</h1>
+          <p class="subtitle">照片只在你的電腦裡處理，不上傳、不連線。</p>
+        </div>
+        <div class="privacy-pill"><span></span> 完全離線</div>
+      </header>
+
+      <section class="control-panel" aria-label="轉換設定">
+        <div class="control-group">
+          <span class="control-label">輸出格式</span>
+          <div class="segmented" role="radiogroup" aria-label="輸出格式">
+            <button class="format-button active" data-format="jpeg" role="radio" aria-checked="true">JPG</button>
+            <button class="format-button" data-format="png" role="radio" aria-checked="false">PNG</button>
+          </div>
+        </div>
+
+        <div class="control-group quality-group">
+          <label class="control-label" for="quality">JPG 畫質 <output id="qualityValue">92%</output></label>
+          <input id="quality" type="range" min="70" max="100" step="1" value="92" />
+        </div>
+
+        <div class="output-control">
+          <span class="control-label">儲存位置</span>
+          <button id="outputButton" class="folder-button" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h6l2 2h10v10H3z" /></svg>
+            <span id="outputLabel">轉換時選擇資料夾</span>
+          </button>
+        </div>
+      </section>
+
+      <section id="dropZone" class="drop-zone" tabindex="0" role="button" aria-label="選擇或拖入 HEIC、HEIF 圖片">
+        <input id="fileInput" type="file" accept=".heic,.heif,image/heic,image/heif" multiple hidden />
+        <div class="upload-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" /></svg>
+        </div>
+        <h2>把 HEIC / HEIF 照片拖進來</h2>
+        <p>或點一下選擇檔案，可一次處理多張</p>
+        <span class="file-hint">支援 .heic 與 .heif</span>
+      </section>
+
+      <section id="queueSection" class="queue-section" hidden>
+        <div class="queue-heading">
+          <div>
+            <h2>轉換佇列</h2>
+            <p id="queueSummary">0 個檔案</p>
+          </div>
+          <div class="queue-actions">
+            <button id="addButton" class="ghost-button" type="button">＋ 加入照片</button>
+            <button id="clearButton" class="ghost-button danger" type="button">清除</button>
+          </div>
+        </div>
+
+        <div id="fileList" class="file-list" aria-live="polite"></div>
+
+        <div class="action-bar">
+          <p id="statusMessage" class="status-message">準備好了，選好就可以開始。</p>
+          <div class="primary-actions">
+            <button id="openFolderButton" class="secondary-button" type="button" hidden>開啟資料夾</button>
+            <button id="convertButton" class="primary-button" type="button">
+              <span class="button-label">開始轉換</span>
+              <span class="button-count" id="convertCount">0</span>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <span>原始檔不會被修改</span>
+        <span class="dot">•</span>
+        <span>同名檔案自動加上序號</span>
+        <span class="dot">•</span>
+        <span>JPG / PNG</span>
+      </footer>
+    </main>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <script src="../node_modules/heic2any/dist/heic2any.min.js"></script>
+    <script src="./renderer.js"></script>
+  </body>
+</html>
